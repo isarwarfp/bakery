@@ -1,6 +1,5 @@
 package com.hexad.interview.builder;
 
-import com.hexad.interview.model.BakeryItem;
 import com.hexad.interview.model.BakeryProduct;
 import com.hexad.interview.model.Pack;
 
