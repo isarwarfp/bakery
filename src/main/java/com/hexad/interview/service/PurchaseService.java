@@ -6,21 +6,18 @@ import com.hexad.interview.model.PurchaseResponse;
 import com.hexad.interview.repository.BakeryRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PurchaseService {
-    public void placeOrder(List<PurchaseRequest> orders) {
+    public Map<String, List<PurchaseResponse>> placeOrder(List<PurchaseRequest> orders) {
+        Map<String, List<PurchaseResponse>> response = new HashMap<>();
         BakeryRepository bakeryRepository = init();
-
-        StringBuilder sb = new StringBuilder();
-        for(PurchaseRequest order: orders) {
-            sb.append("Orders are:\n");
-            sb.append(order.getQuantity()).append(" ").append(order.getCode()).append("\n");
-        }
         for (PurchaseRequest order : orders) {
-            bakeryRepository.getCost(order.getCode(), order.getQuantity())
-                    .stream().forEach(System.out::println);
+            response.put(order.getCode(), bakeryRepository.getCost(order.getCode(), order.getQuantity()));
         }
+        return response;
     }
 
     public BakeryRepository init() {

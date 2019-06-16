@@ -5,29 +5,20 @@ import java.util.List;
 import java.util.Map;
 
 public class PurchaseResponse {
-    private String paymentId;
-    private Map<String, Map<Integer, List<Pack>>> packMap = new HashMap<>();
+    private Map<Integer, List<Pack>> packMap = new HashMap<>();
     private BakeryProduct product;
     private int quantity;
     private double total;
-
-    public String getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(String paymentId) {
-        this.paymentId = paymentId;
-    }
 
     public BakeryProduct getProduct() {
         return product;
     }
 
-    public Map<String, Map<Integer, List<Pack>>> getPackMap() {
+    public Map<Integer, List<Pack>> getPackMap() {
         return packMap;
     }
 
-    public void setPackMap(Map<String, Map<Integer, List<Pack>>> packMap) {
+    public void setPackMap(Map<Integer, List<Pack>> packMap) {
         this.packMap = packMap;
     }
 
@@ -60,13 +51,11 @@ public class PurchaseResponse {
         StringBuilder sb = new StringBuilder();
         sb.append(quantity).append(" ").append(product.getCode()).append(" $").append(total);
 
-        for(Map.Entry<String, Map<Integer, List<Pack>>> packEntry: packMap.entrySet()) {
-            for(Map.Entry<Integer, List<Pack>> packQtyEntry: packEntry.getValue().entrySet()) {
-                sb.append("\n\t\t");
-                sb.append(packQtyEntry.getValue().size()).append(" x ");
-                Pack p = packQtyEntry.getValue().stream().findFirst().get();
-                sb.append(p.getQuantity()).append(" $").append(p.getPrice());
-            }
+        for(Map.Entry<Integer, List<Pack>> packEntry: packMap.entrySet()) {
+            sb.append("\n\t\t");
+            sb.append(packEntry.getValue().size()).append(" x ");
+            Pack p = packEntry.getValue().stream().findFirst().get();
+            sb.append(p.getQuantity()).append(" $").append(p.getPrice());
         }
         return sb.toString();
     }

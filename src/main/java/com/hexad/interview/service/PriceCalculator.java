@@ -21,19 +21,17 @@ public class PriceCalculator {
         calculateMinPack(0, number, packs);
         while(!stack.isEmpty()) {
             Pack pack = stack.pop();
-            Map<String, Map<Integer, List<Pack>>> map = response.getPackMap();
-            if(!map.containsKey(product.getCode())) {
-                map.put(product.getCode(), new HashMap<>());
+            Map<Integer, List<Pack>> map = response.getPackMap();
+            if(!map.containsKey(pack.getQuantity())) {
+                map.put(pack.getQuantity(), new ArrayList<>());
             }
-            if(!map.get(product.getCode()).containsKey(pack.getQuantity())) {
-                map.get(product.getCode()).put(pack.getQuantity(), new ArrayList<>());
-            }
-            map.get(product.getCode()).get(pack.getQuantity()).add(pack);
+            map.get(pack.getQuantity()).add(pack);
             cost += pack.getPrice();
             cost = round(cost, 2);
         }
 
         response.setProduct(product);
+        response.setQuantity(number);
         response.setTotal(cost);
         return response;
     }
