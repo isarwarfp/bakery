@@ -33,6 +33,7 @@ public class PriceCalculator {
         response.setProduct(product);
         response.setQuantity(number);
         response.setTotal(cost);
+        response.setFound(foundSolution);
         return response;
     }
 
@@ -64,6 +65,6 @@ public class PriceCalculator {
             }
         }
         if (foundSolution) return;
-        stack.pop();
+        if(!stack.empty()) stack.pop();
     }
 }
